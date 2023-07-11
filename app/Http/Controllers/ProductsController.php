@@ -7,10 +7,21 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    public function index(){
+    public function __construct(Products $product){
+
+        $this->product = $product;
+
+    }
+    public function index(Request $request){
         
-        $findProduct = Products::all();
+        $search = $request->search;
+        $findProduct = $this->product->getProductsSearchIndex(fieldSearch: $search ?? '');
        
         return view('pages.products.pagination', compact('findProduct'));
+    }
+
+    public function delete(Request $request){
+
+        return response()->json(['success' => true]);
     }
 }

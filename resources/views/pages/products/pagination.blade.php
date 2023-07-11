@@ -5,7 +5,7 @@
         <h1 class="h2">Produtos</h1>
     </div>
     <div>
-        <form action="" method="GET">
+        <form action="{{ route('products.index') }}" method="GET">
             <input type="text" name="search" placeholder="Digite o Nome">
             <button> Pesquisar </button>
             <a type="button" href="" class="btn btn-success float-end">
@@ -13,6 +13,9 @@
             </a>
         </form>
         <div class="table-responsive small">
+            @if($findProduct->isEmpty())
+                <p>Não Existe dados!</p>
+            @else
         <table class="table table-striped table-sm">
           <thead>
             <tr>
@@ -30,7 +33,8 @@
                         <a href="" class="btn btn-light btn-sm">
                             Editar
                         </a>
-                        <a href="" class="btn btn-danger btn-sm">
+                        <meta name='csrf-token' content='{{ csrf_token()}}'></meta>
+                        <a onclick="deleteProduct('{{ route('product.delete')}}', {{$product->id}} )" class="btn btn-danger btn-sm">
                             Excluir
                         </a>
                     </td>
@@ -38,5 +42,6 @@
             @endforeach
           </tbody>
         </table>
+        @endif
     </div>
 @endsection
